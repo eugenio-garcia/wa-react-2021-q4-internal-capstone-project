@@ -1,11 +1,11 @@
 
-import React from 'react'
+import React, {useState} from 'react'
 import featuredProducts from '../data/featured-products.json'
 import './Home.css'
 
 function FeaturedProducts(){
     const products = featuredProducts.results;
-    const [productItems] = React.useState(products);
+    const [productItems,setProductItems] = useState(products);
     /*
         the main image of the product, its name, category, and price.
         image: obj.data.mainimage.url (has dimensions 696 900)
@@ -14,20 +14,20 @@ function FeaturedProducts(){
         price: obj.data.price
     */
 
-    const GridItem = (props) => {
+    const GridItem = ({name, image, category, price, key}) => {
         return (
-        <div key={props.name} className="grid-item" >
+        <div key={key} className="grid-item" >
             <div className="grid-image">
-                <img className="product-image" src={props.image} alt={props.name}/>
+                <img className="product-image" src={image} alt={name}/>
             </div>
             <div>
-                Name:<span>{props.name}</span>
+                Name:<span> {name}</span>
             </div>
             <div>
-                Category:<span>{props.category}</span>
+                Category:<span> {category}</span>
             </div>
             <div>
-                Price:<span style={{color:"green"}}>${props.price}</span>
+                Price:<span style={{color:"green"}}> ${price}</span>
             </div>
             
         </div>);
