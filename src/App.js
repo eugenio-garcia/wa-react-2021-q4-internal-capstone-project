@@ -5,7 +5,7 @@ import Footer from './Footer.js'
 import React from 'react'
 
 function App() {
-  
+  const [showProducts, setShowProducts] = React.useState(false);
 
   return (
     <div className="App">
