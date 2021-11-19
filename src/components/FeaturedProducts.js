@@ -14,9 +14,9 @@ function FeaturedProducts(){
         price: obj.data.price
     */
 
-    const GridItem = ({name, image, category, price, key}) => {
+    const GridItem = ({name, image, category, price, id}) => {
         return (
-        <div key={key} className="grid-item" >
+        <div key={id} className="grid-item" >
             <div className="grid-image">
                 <img className="product-image" src={image} alt={name}/>
             </div>
@@ -35,8 +35,8 @@ function FeaturedProducts(){
 
     function Elements(props) {
         const items = props.items;
-        const elements = items.map((item) => {
-            return <GridItem key={item.data.name} name={item.data.name} category={item.data.category.slug} price={item.data.price} image={item.data.mainimage.url}/>
+        const elements = items.map((item, index) => {
+            return <GridItem key={index} name={item.data.name} category={item.data.category.slug} price={item.data.price} image={item.data.mainimage.url}/>
         });
 
         return (
