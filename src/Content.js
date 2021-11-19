@@ -31,8 +31,8 @@ const If = ({ conditional, children }) => {
   return null;
 };
 
-function Content() {
-  const [showProducts, setShowProducts] = React.useState(false);
+function Content({showProducts, setShowProducts}) {
+  
 
   return (
     <div className="App-content">
