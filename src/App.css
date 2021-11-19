@@ -14,7 +14,7 @@
 
 
 .App-header {
-  background-color: #00004f;
+  background-color: #002171;
   height: 10vh;
   display: flex;
   flex-direction: row;
@@ -27,8 +27,8 @@
 
 
 .App-content {
-  background-color: #80e27e;
-  max-height: 80vh;
+  background-color: #white;
+  /* max-height: 80vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,12 +38,12 @@
 }
 
 .App-footer {
-  background-color: #00004f;
+  background-color: #002171;
   max-height: 10vh;
   display: flex;
   flex-direction: row;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }

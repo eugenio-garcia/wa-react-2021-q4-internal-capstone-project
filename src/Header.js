@@ -13,7 +13,7 @@ function Header() {
 
 					<div>
 					<img src={logo} className="App-logo" alt="logo" />
-					<span>Food @ Home</span>
+					<span>Food & Furniture</span>
 					</div>
 					<div>
 					<img src={magnifier} className="magnifier" alt="magnifier" />

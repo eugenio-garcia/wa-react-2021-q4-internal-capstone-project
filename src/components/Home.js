@@ -2,40 +2,97 @@
 import React from 'react'
 import styled from 'styled-components';
 import banners from '../data/featured-banners.json'
+import productCategories from '../data/product-categories.json'
+import FeaturedProducts from './FeaturedProducts';
 
-// var slideIndex = 1;
-// showDivs(slideIndex);
+function Categories(){
+    const categories = productCategories.results.map((obj) => {
+        return obj.data.name
+    });
+    const [categoryItems,setCategoryitems] = React.useState(categories.slice(0,3));
+    const [section,setSection] = React.useState(0);
+    
 
-// function plusDivs(n) {
-//     showDivs(slideIndex += n);
-// }
+    const DivCategory = styled.div`
+        border: 1px solid;
+        min-width: 30vh;
+        background-color: #5472d3;
+    `;
 
-// function showDivs(n) {
-//     var i;
-//     var x = document.getElementsByClassName("mySlides");
-//     if (n > x.length) {slideIndex = 1}
-//     if (n < 1) {slideIndex = x.length} ;
-//     for (i = 0; i < x.length; i++) {
-//         x[i].style.display = "none";
-//     }
-//     x[slideIndex-1].style.display = "block";
-// }
+    const Category = ({name}) => {
+        return (
+        <DivCategory key={name} className="category">
+            <p>{name}</p>
+        </DivCategory>);
+    }
+
+    function Elements(props) {
+        const items = props.items;
+        console.log(items);
+        const elements = items.map((item) => {
+            return <Category name={item}/>
+        });
+
+        return (
+            elements
+        );
+    }
+    
+
+    const handleChangeNext = (event) => {
+        if(section + 1 < 3){
+            const columns = [];
+            var tmp = section +1
+            for (var i = 0; i < 3; i++){
+                columns.push(categories[tmp+i])
+                
+            }
+            setSection(section+1)
+            setCategoryitems(columns)
+        }
+    }
+
+    const handleChangeBack = (event) => {
+        if(section - 1 >= 0){
+            const columns = [];
+            var tmp = section - 1;
+            for (var i = 0; i < 3; i++){
+                columns.push(categories[tmp+i])
+                
+            }
+            setSection(section-1)
+            setCategoryitems(columns)
+        }
+    }
+
+
+    return (
+        <div className="categoriesCarousel">
+        <button className="button" onClick={handleChangeBack}>{"<"}</button>
+        <Elements  items={categoryItems}/>
+        <button className="button" onClick={handleChangeNext} >{">"}</button>
+    </div>);
+    
+
+} 
 
 function Home() {
 
     const [index,setIndex] = React.useState(0);
-
-
-    console.log(banners.results)
-
-
     
 
-    const Image = ({src}) => {
-        const ImageInSlider = styled.img`
+    //console.log(banners.results)
+
+    const ImageInSlider = styled.img`
         max-height: 100vh;
         width: 100vh;
         `;
+
+    
+    
+
+    const Image = ({src}) => {
+        
 
         return <ImageInSlider className="slider" src={src}/>
     }
@@ -48,31 +105,47 @@ function Home() {
     const images = banners.results.map((obj) => {
         return obj.data.main_image.url
     });
+    
 
     const Slider = ({images}) => {
         
-        const i = index%images.length;
+        const absIndex = Math.abs(index);
+        const i = absIndex%images.length;
 
 
         return ( <Image src={images[i]} />)
 
     }
 
+
+
     
 
-    console.log(images)
+
+
+
+    //console.log(images)
 
   return (
-      
-      <div className="slider">
-        <Slider images={images}>
-            {/* <Images /> */}
-        </Slider>
+      <div className="wrapper">
+        <div className="slider">
+            <button onClick={() => setIndex(index - 1)}>
+                {"<"}
+            </button>
+            <Slider images={images}>
+                {/* <Images /> */}
+            </Slider>
 
-        <button onClick={() => setIndex(index + 1)}>
-        Next >
-      </button>
+            <button onClick={() => setIndex(index + 1)}>
+                {">"}
+            </button>
+        </div>
+
+        <Categories  />
+        <FeaturedProducts />
       </div>
+
+
   );
 }
 
