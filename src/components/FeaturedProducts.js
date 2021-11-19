@@ -1,13 +1,11 @@
 
 import React from 'react'
-import styled from 'styled-components';
 import featuredProducts from '../data/featured-products.json'
-import style from './Home.css'
+import './Home.css'
 
 function FeaturedProducts(){
     const products = featuredProducts.results;
-    const [productItems,setProductitems] = React.useState(products);
-    console.log(featuredProducts.results)
+    const [productItems] = React.useState(products);
     /*
         the main image of the product, its name, category, and price.
         image: obj.data.mainimage.url (has dimensions 696 900)
@@ -18,9 +16,9 @@ function FeaturedProducts(){
 
     const GridItem = (props) => {
         return (
-        <div className="grid-item" key={props.name} >
+        <div key={props.name} className="grid-item" >
             <div className="grid-image">
-                <img className="product-image" src={props.image}/>
+                <img className="product-image" src={props.image} alt={props.name}/>
             </div>
             <div>
                 Name:<span>{props.name}</span>
@@ -37,9 +35,8 @@ function FeaturedProducts(){
 
     function Elements(props) {
         const items = props.items;
-        console.log(items);
         const elements = items.map((item) => {
-            return <GridItem name={item.data.name} category={item.data.category.slug} price={item.data.price} image={item.data.mainimage.url}/>
+            return <GridItem key={item.data.name} name={item.data.name} category={item.data.category.slug} price={item.data.price} image={item.data.mainimage.url}/>
         });
 
         return (

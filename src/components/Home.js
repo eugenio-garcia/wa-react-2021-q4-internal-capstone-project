@@ -5,6 +5,19 @@ import banners from '../data/featured-banners.json'
 import productCategories from '../data/product-categories.json'
 import FeaturedProducts from './FeaturedProducts';
 
+
+const DivCategory = styled.div`
+        border: 1px solid;
+        min-width: 30vh;
+        background-color: #5472d3;
+    `;
+
+const ImageInSlider = styled.img`
+        max-height: 100vh;
+        width: 100vh;
+        `;
+
+
 function Categories(){
     const categories = productCategories.results.map((obj) => {
         return obj.data.name
@@ -13,11 +26,7 @@ function Categories(){
     const [section,setSection] = React.useState(0);
     
 
-    const DivCategory = styled.div`
-        border: 1px solid;
-        min-width: 30vh;
-        background-color: #5472d3;
-    `;
+    
 
     const Category = ({name}) => {
         return (
@@ -28,9 +37,8 @@ function Categories(){
 
     function Elements(props) {
         const items = props.items;
-        console.log(items);
         const elements = items.map((item) => {
-            return <Category name={item}/>
+            return <Category key={item} name={item}/>
         });
 
         return (
@@ -79,29 +87,11 @@ function Categories(){
 function Home() {
 
     const [index,setIndex] = React.useState(0);
-    
-
-    //console.log(banners.results)
-
-    const ImageInSlider = styled.img`
-        max-height: 100vh;
-        width: 100vh;
-        `;
-
-    
-    
 
     const Image = ({src}) => {
-        
-
         return <ImageInSlider className="slider" src={src}/>
     }
-    // const Images = () => {
-    //     return ( banners.results.map((obj) =>{
-    //         return <Image src={obj.data.main_image.url} />
-    //     })
-    //     );
-    // }
+
     const images = banners.results.map((obj) => {
         return obj.data.main_image.url
     });
@@ -117,14 +107,6 @@ function Home() {
 
     }
 
-
-
-    
-
-
-
-
-    //console.log(images)
 
   return (
       <div className="wrapper">
