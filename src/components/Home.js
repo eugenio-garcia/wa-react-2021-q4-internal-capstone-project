@@ -43,7 +43,7 @@ function Categories() {
     if (section + 1 < 3) {
       const columns = [];
       let tmp = section + 1;
-      for (var i = 0; i < 3; i++) {
+      for (let i = 0; i < 3; i++) {
         columns.push(categories[tmp + i]);
       }
       setSection(section + 1);
@@ -54,8 +54,8 @@ function Categories() {
   const handleChangeBack = (event) => {
     if (section - 1 >= 0) {
       const columns = [];
-      var tmp = section - 1;
-      for (var i = 0; i < 3; i++) {
+      let tmp = section - 1;
+      for (let i = 0; i < 3; i++) {
         columns.push(categories[tmp + i]);
       }
       setSection(section - 1);
