@@ -1,0 +1,59 @@
+
+import React, {useState} from 'react'
+import featuredProducts from '../data/featured-products.json'
+import './Home.css'
+
+function FeaturedProducts(){
+    const products = featuredProducts.results;
+    const [productItems,setProductItems] = useState(products);
+    /*
+        the main image of the product, its name, category, and price.
+        image: obj.data.mainimage.url (has dimensions 696 900)
+        name:  obj.data.name
+        category: obj.data.category.slug
+        price: obj.data.price
+    */
+
+    const GridItem = ({name, image, category, price, id}) => {
+        return (
+        <div key={id} className="grid-item" >
+            <div className="grid-image">
+                <img className="product-image" src={image} alt={name}/>
+            </div>
+            <div>
+                Name:<span> {name}</span>
+            </div>
+            <div>
+                Category:<span> {category}</span>
+            </div>
+            <div>
+                Price:<span style={{color:"green"}}> ${price}</span>
+            </div>
+            
+        </div>);
+    }
+
+    function Elements(props) {
+        const items = props.items;
+        const elements = items.map((item, index) => {
+            return <GridItem key={index} name={item.data.name} category={item.data.category.slug} price={item.data.price} image={item.data.mainimage.url}/>
+        });
+
+        return (
+            elements
+        );
+    }
+    
+
+
+
+    return (
+        <div className="grid">
+        <Elements  items={productItems}/>
+        </div>
+    );
+    
+
+}
+
+export default FeaturedProducts;

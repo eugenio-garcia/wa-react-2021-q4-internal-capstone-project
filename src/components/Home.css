@@ -1,0 +1,55 @@
+.categoriesCarousel {
+    /* max-height: 80vh; */
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: space-around;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    padding: 10px;
+    
+  }
+
+  .categoriesCarousel .button{
+      background-color: transparent;
+      border: 1px solid;
+  }
+
+  .categoriesCarousel .button:hover{
+    background-color: #00004f;
+    color:white;
+  }
+
+  .categoriesCarousel .category{
+    min-width: 30%;
+  }
+
+.grid {
+    display: grid;
+    /* grid-template-columns: auto auto auto;  */
+    padding: 10px;
+    margin: 0 auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+   .grid-item{
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: medium;
+    text-align: justify;
+  } 
+
+  .grid-image{
+  
+  }
+
+  .product-image{
+      max-width: 100%;
+  }
+
+
+
+  @media (min-width: 600px) {
+    .grid { grid-template-columns: repeat(3, auto); }
+  }
