@@ -1,12 +1,21 @@
 import React from "react";
-import styled from 'styled-components'
+import styled, { ThemeProvider } from "styled-components";
 import products from "../data/featured-products.json";
-import categories from "../data/product-categories.json";
+import productCategories from "../data/product-categories.json";
 import FeaturedProducts from "./FeaturedProducts";
 import "./Products.css";
+// Define our `fg` and `bg` on the theme
+const theme = {
+  fg: "#00004f",
+  bg: "white",
+};
 
-const DivWrapper = styled.div`
-`;
+// This theme swaps `fg` and `bg`
+const invertTheme = ({ fg, bg }) => ({
+  fg: bg,
+  bg: fg,
+});
+const DivWrapper = styled.div``;
 
 const DivSideBar = styled.div`
   float: left;
@@ -17,18 +26,75 @@ const DivMain = styled.div`
   width: 80%;
 `;
 
-function SideBar() {
-  return <DivSideBar>SideBar</DivSideBar>;
+const List = styled.ul`
+  list-style-type: none;
+  margin: 10;
+  padding: 10;
+  width: 200px;
+  background-color: ${(props) => props.theme.bg};
+`;
+
+const StyledItem = styled.a`
+  color: ${(props) => props.theme.fg};
+  background: ${(props) => props.theme.bg};
+
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: ${(props) => props.theme.fg};
+    color: ${(props) => props.theme.bg};
+  }
+`;
+
+function Categories() {
+  const categories = productCategories.results.map((obj) => {
+    return obj.data.name;
+  });
+
+  const Category = ({ name }) => {
+    return (
+      <li key={name} className="category">
+        <StyledItem>{name}</StyledItem> 
+      </li>
+    );
+  };
+
+  function Elements(props) {
+    const items = props.items;
+    const elements = items.map((item) => {
+      return <Category key={item} name={item} />;
+    });
+
+    return elements;
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="categoriesNavBar">
+        <DivSideBar>
+          <List className="navBar">
+            <Elements items={categories} />
+          </List>
+        </DivSideBar>
+      </div>
+    </ThemeProvider>
+  );
 }
 
 function MainLayer() {
-  return <DivMain><FeaturedProducts/></DivMain>;
+  return (
+    <DivMain>
+      <FeaturedProducts />
+    </DivMain>
+  );
 }
 
 function Products() {
   return (
     <DivWrapper>
-      <SideBar />
+      <Categories />
       <MainLayer />
     </DivWrapper>
   );

@@ -2,10 +2,10 @@ import "./App.css";
 import Header from "./Header.js";
 import Content from "./Content.js";
 import Footer from "./Footer.js";
-import React from "react";
+import React, {useState} from "react";
 
 function App() {
-  const [showProducts, setShowProducts] = React.useState(false);
+  const [showProducts, setShowProducts] = useState(false);
 
   return (
     <div className="App">
