@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled, { ThemeProvider } from "styled-components";
 import products from "../data/featured-products.json";
 import productCategories from "../data/product-categories.json";
@@ -82,20 +82,21 @@ function Categories() {
     </ThemeProvider>
   );
 }
-
-function MainLayer() {
+const MainLayer = ({ productItems }) => {
   return (
     <DivMain>
-      <FeaturedProducts />
+      <FeaturedProducts featuredProducts={productItems}/>
     </DivMain>
   );
-}
+  }
 
 function Products() {
+  const [productItems,setProductItems] = useState(products.results);
+
   return (
     <DivWrapper>
       <Categories />
-      <MainLayer />
+      <MainLayer productItems={productItems} />
     </DivWrapper>
   );
 }
