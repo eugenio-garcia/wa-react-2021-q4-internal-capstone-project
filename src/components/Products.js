@@ -4,6 +4,10 @@ import products from "../data/featured-products.json";
 import productCategories from "../data/product-categories.json";
 import FeaturedProducts from "./FeaturedProducts";
 import "./Products.css";
+function Products() {
+  const [productItems,setProductItems] = useState(products.results);
+  const [currentCategory,setCurrentCategory] = useState('*');
+
 // Define our `fg` and `bg` on the theme
 const theme = {
   fg: "#00004f",
@@ -48,15 +52,30 @@ const StyledItem = styled.a`
   }
 `;
 
+const handleChangeCategory = (event) => {
+
+  console.log(event.target.name);
+    setCurrentCategory(event.target.name)
+
+    console.log(productItems)
+    console.log(productItems.filter(category => event.target.name));
+    
+    setProductItems(productItems.filter(category => event.target.name))
+  
+};
+
+
 function Categories() {
   const categories = productCategories.results.map((obj) => {
     return obj.data.name;
   });
 
+
+
   const Category = ({ name }) => {
     return (
       <li key={name} className="category">
-        <StyledItem>{name}</StyledItem> 
+        <StyledItem href="#" onClick={handleChangeCategory} name={name}>{name}</StyledItem> 
       </li>
     );
   };
@@ -73,6 +92,7 @@ function Categories() {
   return (
     <ThemeProvider theme={theme}>
       <div className="categoriesNavBar">
+        {currentCategory}
         <DivSideBar>
           <List className="navBar">
             <Elements items={categories} />
@@ -90,8 +110,9 @@ const MainLayer = ({ productItems }) => {
   );
   }
 
-function Products() {
-  const [productItems,setProductItems] = useState(products.results);
+
+
+  
 
   return (
     <DivWrapper>
