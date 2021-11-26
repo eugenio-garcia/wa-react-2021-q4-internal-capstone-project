@@ -64,10 +64,11 @@ function Products() {
       //remove
       tmpCurrentCategory = tmpCurrentCategory.filter(function(e) { return e !== category })
     } else {
-      //apend
-      event.target.className = 'active';
+      //append
       tmpCurrentCategory.push(category);
     }
+    console.log(tmpCurrentCategory);
+
     setCurrentCategory(tmpCurrentCategory);
 
 
@@ -76,13 +77,24 @@ function Products() {
           
 
       (product) => {
-        return currentCategory.includes(product.data.category.slug)
+        return tmpCurrentCategory.includes(product.data.category.slug)
       }
     );
     console.log(newProductItems);
 
     setProductItems(newProductItems);
   };
+
+  function MenuItem({name}){
+    const [isActive, setIsActive] = useState(false);
+
+
+    return (
+        <StyledItem  className={currentCategory.includes(name.toLowerCase()) ? "active" : ""} href="#" onClick={handleChangeCategory} name={name}>
+          {name}
+        </StyledItem>
+    );
+  }
 
   function Categories() {
     const categories = productCategories.results.map((obj) => {
@@ -92,9 +104,7 @@ function Products() {
     const Category = ({ name }) => {
       return (
         <li key={name} className="category">
-          <StyledItem href="#" onClick={handleChangeCategory} name={name}>
-            {name}
-          </StyledItem>
+          <MenuItem name={name} />
         </li>
       );
     };
