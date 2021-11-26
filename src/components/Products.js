@@ -1,118 +1,133 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import products from "../data/featured-products.json";
 import productCategories from "../data/product-categories.json";
 import FeaturedProducts from "./FeaturedProducts";
 import "./Products.css";
 function Products() {
-  const [productItems,setProductItems] = useState(products.results);
-  const [currentCategory,setCurrentCategory] = useState('*');
+  const [productItems, setProductItems] = useState(products.results);
+  const [currentCategory, setCurrentCategory] = useState([]);
 
-// Define our `fg` and `bg` on the theme
-const theme = {
-  fg: "#00004f",
-  bg: "white",
-};
-
-// This theme swaps `fg` and `bg`
-const invertTheme = ({ fg, bg }) => ({
-  fg: bg,
-  bg: fg,
-});
-const DivWrapper = styled.div``;
-
-const DivSideBar = styled.div`
-  float: left;
-  width: 20%;
-`;
-
-const DivMain = styled.div`
-  width: 80%;
-`;
-
-const List = styled.ul`
-  list-style-type: none;
-  margin: 10;
-  padding: 10;
-  width: 200px;
-  background-color: ${(props) => props.theme.bg};
-`;
-
-const StyledItem = styled.a`
-  color: ${(props) => props.theme.fg};
-  background: ${(props) => props.theme.bg};
-
-  display: block;
-  padding: 8px 16px;
-  text-decoration: none;
-
-  &:hover {
-    background-color: ${(props) => props.theme.fg};
-    color: ${(props) => props.theme.bg};
-  }
-`;
-
-const handleChangeCategory = (event) => {
-
-  console.log(event.target.name);
-    setCurrentCategory(event.target.name)
-
-    console.log(productItems)
-    console.log(productItems.filter(category => event.target.name));
-    
-    setProductItems(productItems.filter(category => event.target.name))
-  
-};
-
-
-function Categories() {
-  const categories = productCategories.results.map((obj) => {
-    return obj.data.name;
-  });
-
-
-
-  const Category = ({ name }) => {
-    return (
-      <li key={name} className="category">
-        <StyledItem href="#" onClick={handleChangeCategory} name={name}>{name}</StyledItem> 
-      </li>
-    );
+  // Define our `fg` and `bg` on the theme
+  const theme = {
+    fg: "#00004f",
+    bg: "white",
   };
 
-  function Elements(props) {
-    const items = props.items;
-    const elements = items.map((item) => {
-      return <Category key={item} name={item} />;
+  // This theme swaps `fg` and `bg`
+  const invertTheme = ({ fg, bg }) => ({
+    fg: bg,
+    bg: fg,
+  });
+  const DivWrapper = styled.div``;
+
+  const DivSideBar = styled.div`
+    float: left;
+    width: 20%;
+  `;
+
+  const DivMain = styled.div`
+    width: 80%;
+  `;
+
+  const List = styled.ul`
+    list-style-type: none;
+    margin: 10;
+    padding: 10;
+    width: 200px;
+    background-color: ${(props) => props.theme.bg};
+  `;
+
+  const StyledItem = styled.a`
+    color: ${(props) => props.theme.fg};
+    background: ${(props) => props.theme.bg};
+
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: ${(props) => props.theme.fg};
+      color: ${(props) => props.theme.bg};
+    }
+  `;
+
+  const handleChangeCategory = (event) => {
+    console.log(event.target.name);
+    //setCurrentCategory(event.target.name);
+
+    let category = event.target.name.toLowerCase();
+    let tmpCurrentCategory = currentCategory;
+
+    console.log(currentCategory);
+    if (currentCategory.includes(category)) {
+      //remove
+      tmpCurrentCategory = tmpCurrentCategory.filter(function(e) { return e !== category })
+    } else {
+      //apend
+      event.target.className = 'active';
+      tmpCurrentCategory.push(category);
+    }
+    setCurrentCategory(tmpCurrentCategory);
+
+
+    console.log(products);
+    let newProductItems = products.results.filter(
+          
+
+      (product) => {
+        return currentCategory.includes(product.data.category.slug)
+      }
+    );
+    console.log(newProductItems);
+
+    setProductItems(newProductItems);
+  };
+
+  function Categories() {
+    const categories = productCategories.results.map((obj) => {
+      return obj.data.name;
     });
 
-    return elements;
+    const Category = ({ name }) => {
+      return (
+        <li key={name} className="category">
+          <StyledItem href="#" onClick={handleChangeCategory} name={name}>
+            {name}
+          </StyledItem>
+        </li>
+      );
+    };
+
+    function Elements(props) {
+      const items = props.items;
+      const elements = items.map((item) => {
+        return <Category key={item} name={item} />;
+      });
+
+      return elements;
+    }
+
+    return (
+      <ThemeProvider theme={theme}>
+        <div className="categoriesNavBar">
+          {currentCategory}
+          <DivSideBar>
+            <List className="navBar">
+              <Elements items={categories} />
+            </List>
+          </DivSideBar>
+        </div>
+      </ThemeProvider>
+    );
   }
-
-  return (
-    <ThemeProvider theme={theme}>
-      <div className="categoriesNavBar">
-        {currentCategory}
-        <DivSideBar>
-          <List className="navBar">
-            <Elements items={categories} />
-          </List>
-        </DivSideBar>
-      </div>
-    </ThemeProvider>
-  );
-}
-const MainLayer = ({ productItems }) => {
-  return (
-    <DivMain>
-      <FeaturedProducts featuredProducts={productItems}/>
-    </DivMain>
-  );
-  }
-
-
-
-  
+  const MainLayer = ({ productItems }) => {
+    return (
+      <DivMain>
+        <FeaturedProducts featuredProducts={productItems} />
+      </DivMain>
+    );
+  };
 
   return (
     <DivWrapper>
