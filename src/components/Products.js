@@ -53,46 +53,41 @@ function Products() {
   `;
 
   const handleChangeCategory = (event) => {
-    console.log(event.target.name);
-    //setCurrentCategory(event.target.name);
-
     let category = event.target.name.toLowerCase();
     let tmpCurrentCategory = currentCategory;
 
-    console.log(currentCategory);
+    //console.log(currentCategory);
     if (currentCategory.includes(category)) {
       //remove
-      tmpCurrentCategory = tmpCurrentCategory.filter(function(e) { return e !== category })
+      tmpCurrentCategory = tmpCurrentCategory.filter(function (e) {
+        return e !== category;
+      });
     } else {
       //append
       tmpCurrentCategory.push(category);
     }
-    console.log(tmpCurrentCategory);
 
     setCurrentCategory(tmpCurrentCategory);
 
-
-    console.log(products);
-    let newProductItems = products.results.filter(
-          
-
-      (product) => {
-        return tmpCurrentCategory.includes(product.data.category.slug)
-      }
-    );
-    console.log(newProductItems);
+    let newProductItems = products.results.filter((product) => {
+      return tmpCurrentCategory.includes(product.data.category.slug);
+    });
 
     setProductItems(newProductItems);
   };
 
-  function MenuItem({name}){
+  function MenuItem({ name }) {
     const [isActive, setIsActive] = useState(false);
 
-
     return (
-        <StyledItem  className={currentCategory.includes(name.toLowerCase()) ? "active" : ""} href="#" onClick={handleChangeCategory} name={name}>
-          {name}
-        </StyledItem>
+      <StyledItem
+        className={currentCategory.includes(name.toLowerCase()) ? "active" : ""}
+        href="#"
+        onClick={handleChangeCategory}
+        name={name}
+      >
+        {name}
+      </StyledItem>
     );
   }
 
