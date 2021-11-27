@@ -53,7 +53,7 @@ function Products() {
   `;
 
   const handleChangeCategory = (event) => {
-    let category = event.target.name.toLowerCase();
+    const category = event.target.name.toLowerCase();
     let tmpCurrentCategory = currentCategory;
 
     //console.log(currentCategory);
