@@ -116,7 +116,7 @@ function Products() {
     return (
       <ThemeProvider theme={theme}>
         <div className="categoriesNavBar">
-          {currentCategory}
+          {currentCategory.join(", ")}
           <DivSideBar>
             <List className="navBar">
               <Elements items={categories} />
