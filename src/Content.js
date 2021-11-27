@@ -31,24 +31,19 @@ const If = ({ conditional, children }) => {
   return null;
 };
 
-function Content({showProducts, setShowProducts}) {
-  
-
+function Content({ showProducts, setShowProducts }) {
   return (
     <div className="App-content">
-      <If conditional={showProducts}>
-        <Products></Products>
-      </If>
-
-      <If conditional={!showProducts}>
-        <Home />
-      </If>
-
       <ThemeProvider theme={theme}>
         <Button onClick={() => setShowProducts(!showProducts)}>
           {showProducts ? "Home Page" : "View all products"}
         </Button>
       </ThemeProvider>
+
+      {showProducts && <Products />}
+
+      {!showProducts && <Home />}
+
     </div>
   );
 }
