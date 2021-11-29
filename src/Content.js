@@ -26,11 +26,6 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-const If = ({ conditional, children }) => {
-  if (conditional) return children;
-  return null;
-};
-
 function Content({ showProducts, setShowProducts }) {
   return (
     <div className="App-content">
