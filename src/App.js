@@ -1,16 +1,16 @@
-import './App.css';
-import Header from'./Header.js'
-import Content from './Content.js'
-import Footer from './Footer.js' 
-import React from 'react'
+import "./App.css";
+import Header from "./Header.js";
+import Content from "./Content.js";
+import Footer from "./Footer.js";
+import React, {useState} from "react";
 
 function App() {
-  
+  const [showProducts, setShowProducts] = useState(false);
 
   return (
     <div className="App">
-      <Header />
-      <Content />
+      <Header showProducts={showProducts} setShowProducts={setShowProducts} />
+      <Content showProducts={showProducts} setShowProducts={setShowProducts} />
       <Footer />
     </div>
   );

@@ -1,10 +1,9 @@
 
 import React, {useState} from 'react'
-import featuredProducts from '../data/featured-products.json'
 import './Home.css'
 
-function FeaturedProducts(){
-    const products = featuredProducts.results;
+function FeaturedProducts({featuredProducts}){
+    const products = featuredProducts;
     const [productItems,setProductItems] = useState(products);
     /*
         the main image of the product, its name, category, and price.

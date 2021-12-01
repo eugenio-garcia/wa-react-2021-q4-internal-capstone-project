@@ -3,10 +3,10 @@ import magnifier from "./magnifier.svg";
 import cart from "./cart.svg";
 import React from "react";
 
-function Header() {
+function Header({setShowProducts}) {
   return (
     <header className="App-header">
-      <div>
+      <div onClick={() => setShowProducts(false)}>
         <img src={logo} className="App-logo" alt="logo" />
         <span>Food & Furniture</span>
       </div>

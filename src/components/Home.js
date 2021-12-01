@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import banners from "../data/featured-banners.json";
+import products from "../data/featured-products.json";
 import FeaturedProducts from "./FeaturedProducts";
 import Categories from "./Categories";
 
@@ -37,7 +38,7 @@ function Home() {
       </div>
 
       <Categories />
-      <FeaturedProducts />
+      <FeaturedProducts featuredProducts={products.results}/>
     </div>
   );
 }
