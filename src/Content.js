@@ -2,6 +2,8 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Home from "./components/Home.js";
 import Products from "./components/Products";
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+
 
 // Define our `fg` and `bg` on the theme
 const theme = {
@@ -35,9 +37,18 @@ function Content({ showProducts, setShowProducts }) {
         </Button>
       </ThemeProvider>
 
-      {showProducts && <Products />}
+      {/* {showProducts && <Products />}
 
-      {!showProducts && <Home />}
+      {!showProducts && <Home />} */}
+
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/home" element={<Home />}>
+          </Route>
+          <Route path="/products" element={<Products />} />
+        </Routes>
+      </Router>
 
     </div>
   );
