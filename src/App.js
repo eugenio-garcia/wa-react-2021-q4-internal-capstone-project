@@ -1,7 +1,4 @@
 import "./App.css";
-import Header from "./Header.js";
-import Content from "./Content.js";
-import Footer from "./Footer.js";
 import Home from "./components/Home"
 import Products from "./components/Products"
 import React, {useState} from "react";
