@@ -3,8 +3,12 @@ import styled, { ThemeProvider } from "styled-components";
 import products from "../data/featured-products.json";
 import productCategories from "../data/product-categories.json";
 import FeaturedProducts from "./FeaturedProducts";
+import Header from "../Header.js";
+import Footer from "../Footer.js";
 import "./Products.css";
-function Products() {
+import Button from "./Button";
+
+function Products({ showProducts, setShowProducts }) {
   const [productItems, setProductItems] = useState(products.results);
   const [currentCategory, setCurrentCategory] = useState([]);
 
@@ -135,10 +139,15 @@ function Products() {
   };
 
   return (
-    <DivWrapper>
-      <Categories />
-      <MainLayer productItems={productItems} />
-    </DivWrapper>
+    <div className="App">
+      <Header showProducts={showProducts} setShowProducts={setShowProducts} />
+      <Button setShowProducts={setShowProducts} showProducts={showProducts} />
+      <DivWrapper>
+        <Categories />
+        <MainLayer productItems={productItems} />
+      </DivWrapper>
+      <Footer />
+    </div>
   );
 }
 
