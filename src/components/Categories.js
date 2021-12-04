@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import productCategories from "../data/product-categories.json";
+import { useProductCategories } from "../utils/hooks/useProductCategories";
+import { Link} from 'react-router-dom'
+
 
 const DivCategory = styled.div`
   border: 1px solid;
@@ -8,23 +10,20 @@ const DivCategory = styled.div`
   background-color: #5472d3;
 `;
 
-function Categories() {
-  const categories = productCategories.results.map((obj) => {
-    return obj.data.name;
-  });
+const CategoryItems = ({ categories }) => {
   const [categoryItems, setCategoryitems] = useState(categories.slice(0, 3));
   const [section, setSection] = React.useState(0);
-
   const Category = ({ name }) => {
     return (
       <DivCategory key={name} className="category">
-        <p>{name}</p>
+        <Link to={`/products?category=${name}`}>{name}</Link>
       </DivCategory>
     );
   };
 
   function Elements(props) {
     const items = props.items;
+
     const elements = items.map((item) => {
       return <Category key={item} name={item} />;
     });
@@ -65,6 +64,34 @@ function Categories() {
       <button className="button" onClick={handleChangeNext}>
         {">"}
       </button>
+    </div>
+  );
+};
+
+function Categories() {
+  const {
+    data: productCategories = {},
+    isLoading,
+    error,
+  } = useProductCategories();
+
+  if (isLoading) return <h1>Loading...</h1>;
+
+  const categories = productCategories.results.map((obj) => {
+    return obj.data.name;
+  });
+
+  return (
+    <div>
+      {isLoading && <h2>Loading...</h2>}
+      {error ? (
+        <h2>An error ocurred</h2>
+      ) : (
+        <div>
+          {console.log(categories)}
+          <CategoryItems categories={categories} />
+        </div>
+      )}
     </div>
   );
 }
