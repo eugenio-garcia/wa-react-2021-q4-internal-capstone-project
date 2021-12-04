@@ -28,6 +28,8 @@ function Home({ showProducts, setShowProducts }) {
   // });
 
   const Slider = ({ items }) => {
+    if (items == null || items.results ==  null) return (<h2>Loading...</h2>);
+
     let images = items.results.map((obj) => {
       return obj.data.main_image.url;
     });
@@ -46,13 +48,7 @@ function Home({ showProducts, setShowProducts }) {
           <button onClick={() => setIndex(index - 1)}>{"<"}</button>
           {isLoading && <h2>Loading...</h2>}
           {error ? (<h2>An error ocurred</h2> ): (
-            <ul>
-              {banners.results.map((image) => (
-                <li>{image.id}</li>
-              )
-              )}
-            </ul>
-            // <Slider items={banners}></Slider>
+              <Slider items={banners} />
           )}
           
 
