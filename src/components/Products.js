@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import products from "../data/featured-products.json";
-import productCategories from "../data/product-categories.json";
+//import productCategories from "../data/product-categories.json";
+import { useProductCategories } from "../utils/hooks/useProductCategories";
 import FeaturedProducts from "./FeaturedProducts";
 import Header from "../Header.js";
 import Footer from "../Footer.js";
@@ -11,6 +12,11 @@ import Button from "./Button";
 function Products({ showProducts, setShowProducts }) {
   const [productItems, setProductItems] = useState(products.results);
   const [currentCategory, setCurrentCategory] = useState([]);
+  const {
+    data: productCategories = {},
+    isLoading,
+    error,
+  } = useProductCategories();
 
   // Define our `fg` and `bg` on the theme
   const theme = {
@@ -80,6 +86,11 @@ function Products({ showProducts, setShowProducts }) {
     setProductItems(newProductItems);
   };
 
+  const handleClearFilter = (event) => {
+    setCurrentCategory([])
+    setProductItems(products.results);
+  }
+
   function MenuItem({ name }) {
     const [isActive, setIsActive] = useState(false);
 
@@ -95,7 +106,7 @@ function Products({ showProducts, setShowProducts }) {
     );
   }
 
-  function Categories() {
+  function Categories({ productCategories }) {
     const categories = productCategories.results.map((obj) => {
       return obj.data.name;
     });
@@ -125,6 +136,7 @@ function Products({ showProducts, setShowProducts }) {
             <List className="navBar">
               <Elements items={categories} />
             </List>
+            <button onClick={handleClearFilter}>Clear Filter</button>
           </DivSideBar>
         </div>
       </ThemeProvider>
@@ -138,12 +150,22 @@ function Products({ showProducts, setShowProducts }) {
     );
   };
 
+  if (isLoading) return <h1>Loading...</h1>;
+
   return (
     <div className="App">
       <Header showProducts={showProducts} setShowProducts={setShowProducts} />
       <Button setShowProducts={setShowProducts} showProducts={showProducts} />
       <DivWrapper>
-        <Categories />
+        {isLoading && <h2>Loading...</h2>}
+        {error ? (
+          <h2>An error ocurred</h2>
+        ) : (
+          <div>
+            <Categories productCategories={productCategories} />
+          </div>
+        )}
+
         <MainLayer productItems={productItems} />
       </DivWrapper>
       <Footer />

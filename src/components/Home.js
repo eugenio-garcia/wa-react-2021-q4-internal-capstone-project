@@ -63,7 +63,7 @@ function Home({ showProducts, setShowProducts }) {
         {errorProducts ? (
           <h2>An error ocurred</h2>
         ) : (
-          <FeaturedProducts featuredProducts={∫.results} />
+          <FeaturedProducts featuredProducts={products.results} />
         )}
       </div>
       <Footer />
