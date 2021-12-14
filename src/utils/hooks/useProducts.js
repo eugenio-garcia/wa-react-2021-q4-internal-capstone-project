@@ -44,5 +44,5 @@ export function useProducts() {
     };
   }, [apiRef, isApiMetadataLoading]);
 
-  return products;
+  return [products, setProducts];
 }

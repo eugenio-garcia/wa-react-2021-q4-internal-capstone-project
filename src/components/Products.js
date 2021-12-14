@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import products from "../data/featured-products.json";
+//import products from "../data/featured-products.json";
 //import productCategories from "../data/product-categories.json";
 import { useProductCategories } from "../utils/hooks/useProductCategories";
+import { useProducts } from "../utils/hooks/useProducts";
 import FeaturedProducts from "./FeaturedProducts";
 import Header from "../Header.js";
 import Footer from "../Footer.js";
@@ -10,13 +11,26 @@ import "./Products.css";
 import Button from "./Button";
 
 function Products({ showProducts, setShowProducts }) {
-  const [productItems, setProductItems] = useState(products.results);
+  const [productItems, setProductItems] = useState(); //useEffect?
   const [currentCategory, setCurrentCategory] = useState([]);
   const {
     data: productCategories = {},
     isLoading,
     error,
   } = useProductCategories();
+  const [ 
+    {
+    data: products = {},
+    isLoadingProducts,
+    errorProducts
+  }, setProducts] = useProducts();
+
+  //
+  useEffect(() => {
+    setProductItems(products.results);
+  },[products]);
+  
+  console.log(productItems);
 
   // Define our `fg` and `bg` on the theme
   const theme = {
@@ -82,14 +96,16 @@ function Products({ showProducts, setShowProducts }) {
     let newProductItems = products.results.filter((product) => {
       return tmpCurrentCategory.includes(product.data.category.slug);
     });
+    
+    
 
     setProductItems(newProductItems);
   };
 
   const handleClearFilter = (event) => {
-    setCurrentCategory([])
+    setCurrentCategory([]);
     setProductItems(products.results);
-  }
+  };
 
   function MenuItem({ name }) {
     const [isActive, setIsActive] = useState(false);
@@ -142,10 +158,21 @@ function Products({ showProducts, setShowProducts }) {
       </ThemeProvider>
     );
   }
-  const MainLayer = ({ productItems }) => {
+  function MainLayer({ productItems }){
+
+    console.log(productItems)
+    if(!productItems && typeof productItems !== 'undefined' && productItems.length > 0) return (<h2>Loading..</h2>);
+    
+    const bol = typeof productItems !== 'undefined' && productItems.length > 0;
+    console.log(bol);
+
+    
     return (
       <DivMain>
-        <FeaturedProducts featuredProducts={productItems} />
+        {(productItems && bol ? <FeaturedProducts featuredProducts={productItems} />: <h2>No..</h2>)}
+        {/*  */}
+          
+        
       </DivMain>
     );
   };
@@ -166,7 +193,12 @@ function Products({ showProducts, setShowProducts }) {
           </div>
         )}
 
-        <MainLayer productItems={productItems} />
+        {isLoadingProducts && <h2>Loading...</h2>}
+        {errorProducts ? (
+          <h2>An error ocurred</h2>
+        ) : (
+          <MainLayer productItems={productItems} />
+          )}
       </DivWrapper>
       <Footer />
     </div>
