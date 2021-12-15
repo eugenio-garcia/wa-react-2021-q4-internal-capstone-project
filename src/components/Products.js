@@ -23,7 +23,7 @@ function Products({ showProducts, setShowProducts }) {
     data: products = {},
     isLoadingProducts,
     errorProducts
-  }, setProducts] = useProducts();
+  }, setProducts] = useProducts(12);
 
   //
   useEffect(() => {

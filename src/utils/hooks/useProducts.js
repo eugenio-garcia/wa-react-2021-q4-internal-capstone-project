@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { API_BASE_URL } from '../constants';
 import { useLatestAPI } from './useLatestAPI';
 
-export function useProducts() {
+export function useProducts(size) {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [products, setProducts] = useState(() => ({
     data: {},
@@ -23,7 +23,7 @@ export function useProducts() {
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
             '[[at(document.type, "product")]]&q=[[at(document.tags, ["Featured"])]]'
-          )}&lang=en-us&pageSize=16`,
+          )}&lang=en-us&pageSize=${size}`,
           {
             signal: controller.signal,
           }

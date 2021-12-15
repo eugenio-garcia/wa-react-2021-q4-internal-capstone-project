@@ -19,11 +19,12 @@ function Home({ showProducts, setShowProducts }) {
   const [index, setIndex] = React.useState(0);
 
   const { data: banners = {}, isLoading, error } = useFeaturedBanners();
-  const {
+  const [ 
+    {
     data: products = {},
     isLoadingProducts,
-    errorProducts,
-  } = useProducts();
+    errorProducts
+  }, setProducts] = useProducts(16);
 
   const Image = ({ src }) => {
     return <ImageInSlider className="slider" src={src} />;
