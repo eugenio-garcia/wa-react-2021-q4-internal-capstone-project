@@ -4,6 +4,8 @@ import Products from "./components/Products"
 import Product from "./components/Product"
 import React, {useState} from "react";
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
+import { Swiper, SwiperSlide } from "swiper";
+
 
 
 function App() {
