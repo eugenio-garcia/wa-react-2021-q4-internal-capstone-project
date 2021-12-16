@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./Home.css";
+import { Link} from 'react-router-dom'
+
 
 function FeaturedProducts({ featuredProducts }) {
   const products = featuredProducts;
@@ -13,7 +15,7 @@ function FeaturedProducts({ featuredProducts }) {
         price: obj.data.price
     */
 
-  const GridItem = ({ name, image, category, price, id }) => {
+  const GridItem = ({ name, image, category, price, id, productId }) => {
     return (
       <div key={id} className="grid-item">
         <div className="grid-image">
@@ -27,6 +29,12 @@ function FeaturedProducts({ featuredProducts }) {
         </div>
         <div>
           Price:<span style={{ color: "green" }}> ${price}</span>
+        </div>
+        <div>
+          <button>Add to cart</button>
+        </div>
+        <div>
+        <Link to={`/product/${productId}`}>See Details</Link>
         </div>
       </div>
     );
@@ -43,6 +51,7 @@ function FeaturedProducts({ featuredProducts }) {
           category={item.data.category.slug}
           price={item.data.price}
           image={item.data.mainimage.url}
+          productId={item.id}
         />
       );
     });

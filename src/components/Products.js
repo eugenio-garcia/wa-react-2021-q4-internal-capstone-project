@@ -199,6 +199,10 @@ function Products({ showProducts, setShowProducts }) {
         ) : (
           <MainLayer productItems={productItems} />
           )}
+          <div>
+            <button>Last</button>
+            <button>Next</button>
+          </div>
       </DivWrapper>
       <Footer />
     </div>
