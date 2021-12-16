@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./components/Home"
 import Products from "./components/Products"
 import Product from "./components/Product"
+import Search from "./components/Search"
 import React, {useState} from "react";
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
 import { Swiper, SwiperSlide } from "swiper";
@@ -20,6 +21,7 @@ function App() {
           </Route>
           <Route path="/products" element={<Products showProducts={showProducts} setShowProducts={setShowProducts}/>} />
           <Route path="/product/:productId" element={<Product showProducts={showProducts} setShowProducts={setShowProducts}/>} />
+          <Route path="/search" element={<Search showProducts={showProducts} setShowProducts={setShowProducts}/>} />
 
         </Routes>
       </Router>
