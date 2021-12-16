@@ -3,6 +3,7 @@ import magnifier from "./magnifier.svg";
 import cart from "./cart.svg";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ShoppingCart from "./components/ShoppingCart";
 
 
 function Header({ setShowProducts }) {
@@ -26,7 +27,9 @@ function Header({ setShowProducts }) {
           <input name="q" className="Search-Text" />
         </form>
       </div>
-      <img src={cart} className="cart" alt="cart" />
+      <ShoppingCart >
+        
+      </ShoppingCart>
     </header>
   );
 }
