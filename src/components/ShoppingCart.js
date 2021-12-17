@@ -1,6 +1,6 @@
 import cart from "../cart.svg";
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { CartContext } from "../utils/hooks/cartContext";
 
 
@@ -14,8 +14,8 @@ function ShoppingCart() {
   };
   return (
     <div>
+      <Link to="/cart"><img src={cart} className="cart" alt="cart" /></Link>
       
-      <img src={cart} className="cart" alt="cart" />
       <span>#{cartObject.length}</span>
     </div>
   );

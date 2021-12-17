@@ -7,6 +7,7 @@ import React, {useState} from "react";
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
 import { Swiper, SwiperSlide } from "swiper";
 import { CartContext } from "./utils/hooks/cartContext"
+import ShoppingCartPage from "./components/ShoppingCartPage";
 
 
 
@@ -24,6 +25,8 @@ function App() {
           <Route path="/products" element={<Products showProducts={showProducts} setShowProducts={setShowProducts}/>} />
           <Route path="/product/:productId" element={<Product showProducts={showProducts} setShowProducts={setShowProducts}/>} />
           <Route path="/search" element={<Search showProducts={showProducts} setShowProducts={setShowProducts}/>} />
+          <Route path="/cart" element={<ShoppingCartPage showProducts={showProducts} setShowProducts={setShowProducts}/>} />
+
 
         </Routes>
       </Router>
