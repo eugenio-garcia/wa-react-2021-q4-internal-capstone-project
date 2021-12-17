@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { useProduct } from "../utils/hooks/useProduct";
@@ -20,18 +20,58 @@ import "swiper/components/pagination/pagination.min.css";
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation } from "swiper";
+import { CartContext } from "../utils/hooks/cartContext";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
 
+function CartButtons({product}){
+  const { cartObject, setCartObject} = useContext(CartContext)
+  const [quantity, setQuantity] = useState(1);
+
+  const onQtyChange = (value) => {
+    console.log(value);
+    setQuantity(value);
+  }
+  function handleCartClick(){
+    console.log("Adding to cart")
+    const cartItem = {product:product, qty: quantity};
+    const cart = cartObject;
+    cart.push(cartItem)
+    console.log(cart);
+    
+    setCartObject(cart);
+  }
+
+  return (
+<div>
+            <input value={quantity} onChange={(e) => onQtyChange(e.target.value)} ></input>
+            <button onClick={handleCartClick}>Add to Cart</button>
+            <span>{JSON.stringify(cartObject[0])}</span>
+          </div>
+  );
+}
+
+
+
+
+
 function Product({ showProducts, setShowProducts }) {
+  
+
   let params = useParams();
+
+
+
+
+  
 
   const {
     data: product = {},
     isLoadingProduct,
     errorProduct,
   } = useProduct(params.productId);
+
 
   console.log(params.productId);
 
@@ -59,7 +99,12 @@ function Product({ showProducts, setShowProducts }) {
     min-height: 600px;
   `;
 
-  const MainLayer = ({ product }) => {
+ 
+
+  function MainLayer({ product }){
+    
+
+
     console.log(product);
 
     const bol = typeof product !== "undefined" && product.length > 0;
@@ -128,8 +173,7 @@ function Product({ showProducts, setShowProducts }) {
             Description:<p style={{ fontWeight: "italic" }}> {description}</p>
           </div>
           <div>
-            <input></input>
-            <button>Add to Cart</button>
+            <CartButtons product={product} />
           </div>
           <div>
             <h2>Specs:</h2>
@@ -166,7 +210,7 @@ function Product({ showProducts, setShowProducts }) {
       {errorProduct ? (
         <h2>An error ocurred</h2>
       ) : (
-        <MainLayer product={product.results} />
+        <MainLayer product={product.results}/>
       )}
 
       <Footer />

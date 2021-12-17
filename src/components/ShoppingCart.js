@@ -1,10 +1,12 @@
 import cart from "../cart.svg";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../utils/hooks/cartContext";
 
 
 function ShoppingCart() {
   let navigate = useNavigate();
+  const { cartObject, setCartObject} = useContext(CartContext)
 
 
   const handleOnClick = (event) => {
@@ -14,7 +16,7 @@ function ShoppingCart() {
     <div>
       
       <img src={cart} className="cart" alt="cart" />
-      <span>#{1}</span>
+      <span>#{cartObject.length}</span>
     </div>
   );
 }
