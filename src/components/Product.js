@@ -37,10 +37,16 @@ function CartButtons({product}){
     console.log("Adding to cart")
     const cartItem = {product:product, qty: quantity};
     const cart = cartObject;
-    cart.push(cartItem)
-    console.log(cart);
     
-    setCartObject(cart);
+    console.log(cart);
+
+    if(quantity < product.data.stock){
+      cart.push(cartItem)
+      setCartObject(cart);
+    } else{
+      alert("Error, not enough stock")
+    }
+    
   }
 
   return (
