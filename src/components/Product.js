@@ -52,7 +52,8 @@ function CartButtons({product}){
   return (
 <div>
             <input value={quantity} onChange={(e) => onQtyChange(e.target.value)} ></input>
-            <button onClick={handleCartClick}>Add to Cart</button>
+            {(product && product.data.stock > 0 ? <button onClick={handleCartClick}>Add to Cart</button> : <span>No stock</span>)}
+            
             <span>{JSON.stringify(cartObject[0])}</span>
           </div>
   );
