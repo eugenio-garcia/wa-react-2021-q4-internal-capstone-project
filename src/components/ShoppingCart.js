@@ -6,17 +6,14 @@ import { CartContext } from "../utils/hooks/cartContext";
 
 function ShoppingCart() {
   let navigate = useNavigate();
-  const { cartObject, setCartObject} = useContext(CartContext)
+  const cartObject  = useContext(CartContext)
+  console.log(cartObject);
 
-
-  const handleOnClick = (event) => {
-    navigate(`/...?q=${event.target.q.value}`)
-  };
   return (
     <div>
       <Link to="/cart"><img src={cart} className="cart" alt="cart" /></Link>
       
-      <span>#{cartObject.length}</span>
+      <span>#{cartObject.cart.length}</span>
     </div>
   );
 }

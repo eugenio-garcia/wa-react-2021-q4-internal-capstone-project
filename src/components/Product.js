@@ -24,37 +24,50 @@ import { CartContext } from "../utils/hooks/cartContext";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
+function AddButtonCart(props){
+  const cartObject = useContext(CartContext);
+
+
+  return (
+        <button onClick={()=>cartObject.addProductToCart(props.product,props.quantity)}>
+              Add to Cart
+            </button> 
+  );
+
+
+  // console.log("Adding to cart")
+  // const cartItem = {product:product, qty: quantity};
+  // const cart = cartObject;
+  
+  // console.log(cart);
+
+  // if(quantity < product.data.stock){
+  //   cart.push(cartItem)
+  //   setCartObject(cart);
+  // } else{
+  //   alert("Error, not enough stock")
+  // }
+  
+}
 
 function CartButtons({product}){
-  const { cartObject, setCartObject} = useContext(CartContext)
+  const cartObject = useContext(CartContext);
+
+  
   const [quantity, setQuantity] = useState(1);
 
   const onQtyChange = (value) => {
     console.log(value);
     setQuantity(value);
   }
-  function handleCartClick(){
-    console.log("Adding to cart")
-    const cartItem = {product:product, qty: quantity};
-    const cart = cartObject;
-    
-    console.log(cart);
-
-    if(quantity < product.data.stock){
-      cart.push(cartItem)
-      setCartObject(cart);
-    } else{
-      alert("Error, not enough stock")
-    }
-    
-  }
+  
 
   return (
 <div>
             <input value={quantity} onChange={(e) => onQtyChange(e.target.value)} ></input>
-            {(product && product.data.stock > 0 ? <button onClick={handleCartClick}>Add to Cart</button> : <span>No stock</span>)}
+            {(product && product.data.stock > 0 ? <AddButtonCart product={product} quantity={quantity}></AddButtonCart> : <span>No stock</span>)}
             
-            <span>{JSON.stringify(cartObject[0])}</span>
+            {/* <span>{JSON.stringify(cartObject.cart[0])}</span> */}
           </div>
   );
 }

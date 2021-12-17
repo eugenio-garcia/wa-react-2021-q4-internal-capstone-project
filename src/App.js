@@ -13,10 +13,15 @@ import ShoppingCartPage from "./components/ShoppingCartPage";
 
 function App() {
   const [showProducts, setShowProducts] = useState(false);
-  const [cartObject, setCartObject] = useState([]);
+  const cartObjectInitial =  {
+    cart: [],
+    addProductToCart: addProductToCart,
+    removeProduct: removeProduct
+  }
+  const [cartObject, setCartObject] = useState(cartObjectInitial);
 
   return (
-    <CartContext.Provider value={{cartObject, setCartObject}} >
+    <CartContext.Provider value={cartObject} >
     <Router>
         <Routes>
           <Route exact path="/" element={<Home showProducts={showProducts} setShowProducts={setShowProducts}/>} />
@@ -32,6 +37,37 @@ function App() {
       </Router>
     </CartContext.Provider>
   );
+
+  function addProductToCart(product, quantity){
+      console.log("addProductToCart");
+      console.log(product);
+      console.log(quantity);
+      const cartItem = {id: product.id ,product:product, qty: parseInt(quantity)};
+      const cart = cartObject.cart;
+      
+      console.log(cart);
+      if(quantity < product.data.stock){
+        const filteredCart = cart.filter(i =>{
+          return i.id === product.id;
+        });
+
+        if(filteredCart.length>0) {
+          const pos = cart.map(i => { return i.id; }).indexOf(product.id);//not sure about id
+          cart[pos].qty += parseInt(quantity);
+
+        }else{
+          cart.push(cartItem)
+        }
+        
+        setCartObject({cart:cart, ...cartObject});
+      } else{
+        alert("Error, not enough stock")
+      }
+  }
+
+  function removeProduct(index){
+
+  }
 }
 
 export default App;
