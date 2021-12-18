@@ -1,48 +1,48 @@
-import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../constants';
-import { useLatestAPI } from './useLatestAPI';
+import {useState, useEffect} from 'react'
+import {API_BASE_URL} from '../constants'
+import {useLatestAPI} from './useLatestAPI'
 
 export function useProduct(productId) {
-  const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
+  const {ref: apiRef, isLoading: isApiMetadataLoading} = useLatestAPI()
   const [product, setProduct] = useState(() => ({
     data: {},
     isLoading: true,
-  }));
+  }))
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
-      return () => {};
+      return () => {}
     }
 
-    const controller = new AbortController();
+    const controller = new AbortController()
 
     async function getProduct() {
       try {
-        setProduct({ data: {}, isLoading: true });
+        setProduct({data: {}, isLoading: true})
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-            '[[:d = at(document.id, "')}${productId}${('") ]]'
-          )}`,
+            '[[:d = at(document.id, "',
+          )}${productId}${'") ]]'}`,
           {
             signal: controller.signal,
-          }
-        );
-        const data = await response.json();
+          },
+        )
+        const data = await response.json()
 
-        setProduct({ data, isLoading: false });
+        setProduct({data, isLoading: false})
       } catch (err) {
-        setProduct({ data: {}, isLoading: false });
-        console.error(err);
+        setProduct({data: {}, isLoading: false})
+        console.error(err)
       }
     }
 
-    getProduct();
+    getProduct()
 
     return () => {
-      controller.abort();
-    };
-  }, [apiRef, isApiMetadataLoading]);
+      controller.abort()
+    }
+  }, [apiRef, isApiMetadataLoading])
 
-  return product;
+  return product
 }

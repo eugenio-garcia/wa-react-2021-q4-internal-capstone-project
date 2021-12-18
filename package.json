@@ -18,7 +18,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ignore-path .gitignore .",
+    "format":"prettier --ignore-path .gitignore --write \"**/*.+(js)\""
   },
   "eslintConfig": {
     "extends": [
@@ -39,7 +41,14 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.0",
-    "json-loader": "^0.5.7"
+    "json-loader": "^0.5.7",
+    "prettier": "^2.5.1",
+    "prettierrc": "^0.0.0-5",
+    "typescript": "^4.5.4"
   }
 }
