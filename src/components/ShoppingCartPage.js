@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { useProductSearch } from "../utils/hooks/useProductSearch";
 import Header from "../Header.js";
@@ -8,9 +8,28 @@ import "./Products.css";
 import Button from "./Button";
 import { CartContext } from "../utils/hooks/cartContext";
 
+function RemoveButton(props){
+  const cartObject = useContext(CartContext);
+  return(
+    <button onClick={()=>cartObject.removeProduct(cartObject.cart.indexOf(props.product))}>Remove</button>
+  );
+}
+
+function InputQuantity(props){
+  const cartObject = useContext(CartContext);
+
+  const handleOnChange = (event) => {
+    cartObject.editProductToCart(props.product.product,event.target.value)
+  }
+
+  return(
+    <input value={props.initial} onChange={handleOnChange} ></input>
+  )
+}
+
 
 function ShoppingCartPage({ showProducts, setShowProducts }) {
-    const { cartObject, setCartObject} = useContext(CartContext)
+    const cartObject = useContext(CartContext)
 
   // Define our `fg` and `bg` on the theme
   const theme = {
@@ -38,7 +57,13 @@ function ShoppingCartPage({ showProducts, setShowProducts }) {
 
   const TableProducts = ({products}) => {
     console.log(products);
+    let total = 0;
+    for (let i = 0; i < products.length; i++) {
+        total += products[i].product.data.price * products[i].qty
+    }
+
     return(
+        <div>
         <table>
             <tr>
                 <th>Qty</th>
@@ -46,19 +71,24 @@ function ShoppingCartPage({ showProducts, setShowProducts }) {
                 <th>Name</th>
                 <th>Unit Price</th>
                 <th>Subtotal</th>
+                <th>Actions</th>
             </tr>
-            {products.map((product) => {
+            {products.map((product, index) => {
                 return(
                 <tr>
-                    <td>{product.qty}</td>
+                    <td><InputQuantity initial={product.qty} product={product} ></InputQuantity></td>
                     <td><img style={{maxWidth:"30px"}} src={product.product.data.mainimage.url} /></td>
                     <td>{product.product.data.name}</td>
                     <td>{product.product.data.price}</td>
                     <td>{product.product.data.price * product.qty}</td>
+                    <td><RemoveButton product={product}></RemoveButton></td>
                 </tr>
                 );
             })}
         </table>
+        <h3>Total:{total}</h3>
+        <Link to="/checkout">Proceed to checkout</Link>
+        </div>
     );
   }
 
@@ -90,7 +120,7 @@ function ShoppingCartPage({ showProducts, setShowProducts }) {
       <Button setShowProducts={setShowProducts} showProducts={showProducts} />
 
 
-        <MainLayer products={cartObject} />
+        <MainLayer products={cartObject.cart} />
 
 
       <Footer />

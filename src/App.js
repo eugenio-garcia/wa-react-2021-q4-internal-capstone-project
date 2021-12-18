@@ -16,7 +16,8 @@ function App() {
   const cartObjectInitial =  {
     cart: [],
     addProductToCart: addProductToCart,
-    removeProduct: removeProduct
+    removeProduct: removeProduct,
+    editProductToCart:editProductToCart
   }
   const [cartObject, setCartObject] = useState(cartObjectInitial);
 
@@ -65,8 +66,38 @@ function App() {
       }
   }
 
-  function removeProduct(index){
+  function editProductToCart(product, quantity){
+    console.log("editProductToCart");
+    console.log(product);
+    console.log(quantity);
+    const cartItem = {id: product.id ,product:product, qty: parseInt(quantity)};
+    const cart = cartObject.cart;
+    
+    console.log(cart);
+    if(quantity < product.data.stock){
+      const filteredCart = cart.filter(i =>{
+        return i.id === product.id;
+      });
 
+      if(filteredCart.length>0) {
+        const pos = cart.map(i => { return i.id; }).indexOf(product.id);//not sure about id
+        cart[pos].qty = parseInt(quantity);
+
+      }else{
+        cart.push(cartItem)
+      }
+      
+      setCartObject({cart:cart, ...cartObject});
+    } else{
+      alert("Error, not enough stock")
+    }
+}
+
+  function removeProduct(index){
+    const cart = cartObject.cart;
+    
+    cart.splice(index,1);
+    setCartObject({cart:cart, ...cartObject});
   }
 }
 
