@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
 import { Swiper, SwiperSlide } from "swiper";
 import { CartContext } from "./utils/hooks/cartContext"
 import ShoppingCartPage from "./components/ShoppingCartPage";
+import Checkout from "./components/Checkout";
 
 
 
@@ -32,7 +33,7 @@ function App() {
           <Route path="/product/:productId" element={<Product showProducts={showProducts} setShowProducts={setShowProducts}/>} />
           <Route path="/search" element={<Search showProducts={showProducts} setShowProducts={setShowProducts}/>} />
           <Route path="/cart" element={<ShoppingCartPage showProducts={showProducts} setShowProducts={setShowProducts}/>} />
-
+          <Route path="/checkout" element={<Checkout showProducts={showProducts} setShowProducts={setShowProducts}/>} />
 
         </Routes>
       </Router>
