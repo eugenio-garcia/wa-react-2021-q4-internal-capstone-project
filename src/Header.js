@@ -2,8 +2,17 @@ import logo from "./logo.svg";
 import magnifier from "./magnifier.svg";
 import cart from "./cart.svg";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import ShoppingCart from "./components/ShoppingCart";
 
-function Header({setShowProducts}) {
+
+function Header({ setShowProducts }) {
+  let navigate = useNavigate();
+
+
+  const handleOnSubmit = (event) => {
+    navigate(`/search?q=${event.target.q.value}`)
+  };
   return (
     <header className="App-header">
       <div onClick={() => setShowProducts(false)}>
@@ -11,10 +20,16 @@ function Header({setShowProducts}) {
         <span>Food & Furniture</span>
       </div>
       <div>
-        <img src={magnifier} className="magnifier" alt="magnifier" />
-        <input className="Search-Text" />
+        <form onSubmit={handleOnSubmit}>
+          <button type="submit">
+          <img src={magnifier}></img>
+          </button>
+          <input name="q" className="Search-Text" />
+        </form>
       </div>
-      <img src={cart} className="cart" alt="cart" />
+      <ShoppingCart >
+        
+      </ShoppingCart>
     </header>
   );
 }
