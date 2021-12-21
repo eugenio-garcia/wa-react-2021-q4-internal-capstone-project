@@ -57,7 +57,7 @@ function Home({showProducts, setShowProducts}) {
         </div>
 
         <Categories />
-        {isLoadingProducts && <h2>Loading...</h2>}
+        {isLoadingProducts && <h2>LoadingProducts...</h2>}
         {errorProducts ? (
           <h2>An error ocurred</h2>
         ) : (

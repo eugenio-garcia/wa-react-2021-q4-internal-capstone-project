@@ -41,7 +41,7 @@ function FeaturedProducts({featuredProducts}) {
 
   function Elements(props) {
     const items = props.items
-    if (items == null) return <h2>Loading...</h2>
+    if (items == null) return <h2>LoadingProducts...</h2>
     const elements = items.map((item, index) => {
       return (
         <GridItem
