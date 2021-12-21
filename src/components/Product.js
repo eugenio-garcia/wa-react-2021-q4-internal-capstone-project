@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {useParams} from 'react-router-dom'
 import styled, {ThemeProvider} from 'styled-components'
-import {useProduct} from '../utils/hooks/useProduct'
+import useProduct from '../utils/hooks/useProduct'
 import Header from '../Header.js'
 import Footer from '../Footer.js'
 import './Products.css'
@@ -20,7 +20,7 @@ import 'swiper/components/pagination/pagination.min.css'
 
 // import Swiper core and required modules
 import SwiperCore, {Navigation} from 'swiper'
-import {CartContext} from '../utils/hooks/cartContext'
+import CartContext from '../utils/hooks/cartContext'
 
 // install Swiper modules
 SwiperCore.use([Navigation])

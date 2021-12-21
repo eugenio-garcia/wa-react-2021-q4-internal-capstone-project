@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
-import {API_BASE_URL} from '../constants'
-import {useLatestAPI} from './useLatestAPI'
+import API_BASE_URL from '../constants'
+import useLatestAPI from './useLatestAPI'
 
-export function useProductCategories() {
+export default function useProductCategories() {
   const {ref: apiRef, isLoading: isApiMetadataLoading} = useLatestAPI()
   const [productCategories, setProductCategories] = useState(() => ({
     data: {},
@@ -33,7 +33,6 @@ export function useProductCategories() {
         setProductCategories({data, isLoading: false})
       } catch (err) {
         setProductCategories({data: {}, isLoading: false})
-        console.error(err)
       }
     }
 

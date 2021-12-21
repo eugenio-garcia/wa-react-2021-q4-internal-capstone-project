@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
-import {API_BASE_URL} from '../constants'
-import {useLatestAPI} from './useLatestAPI'
+import API_BASE_URL from '../constants'
+import useLatestAPI from './useLatestAPI'
 
-export function useProductSearch(searchTerm) {
+export default function useProductSearch(searchTerm) {
   const {ref: apiRef, isLoading: isApiMetadataLoading} = useLatestAPI()
   const [products, setProducts] = useState(() => ({
     data: {},
@@ -19,7 +19,6 @@ export function useProductSearch(searchTerm) {
     async function getProducts() {
       try {
         setProducts({data: {}, isLoading: true})
-        console.log(searchTerm)
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
@@ -34,7 +33,6 @@ export function useProductSearch(searchTerm) {
         setProducts({data, isLoading: false})
       } catch (err) {
         setProducts({data: {}, isLoading: false})
-        console.error(err)
       }
     }
 
@@ -43,7 +41,7 @@ export function useProductSearch(searchTerm) {
     return () => {
       controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading])
+  }, [apiRef, isApiMetadataLoading, searchTerm])
 
   return products
 }

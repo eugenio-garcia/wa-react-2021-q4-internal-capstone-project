@@ -1,10 +1,10 @@
-import cart from '../cart.svg'
 import React, {useContext} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
-import {CartContext} from '../utils/hooks/cartContext'
+import cart from '../cart.svg'
+import CartContext from '../utils/hooks/cartContext'
 
-function ShoppingCart() {
-  let navigate = useNavigate()
+const ShoppingCart = function () {
+  const navigate = useNavigate()
   const cartObject = useContext(CartContext)
   console.log(cartObject)
 

@@ -7,8 +7,8 @@ import Categories from './Categories'
 import Header from '../Header.js'
 import Footer from '../Footer.js'
 import Button from './Button'
-import {useFeaturedBanners} from '../utils/hooks/useFeaturedBanners'
-import {useProducts} from '../utils/hooks/useProducts'
+import useFeaturedBanners from '../utils/hooks/useFeaturedBanners'
+import useProducts from '../utils/hooks/useProducts'
 
 const ImageInSlider = styled.img`
   max-height: 100vh;
@@ -46,6 +46,7 @@ function Home({showProducts, setShowProducts}) {
     <div className="App">
       <Header showProducts={showProducts} setShowProducts={setShowProducts} />
       <Button setShowProducts={setShowProducts} showProducts={showProducts} />
+      <h1>Home Page2</h1>
       <div className="wrapper">
         <div className="slider">
           <button onClick={() => setIndex(index - 1)}>{'<'}</button>

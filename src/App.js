@@ -6,7 +6,7 @@ import Search from './components/Search'
 import React, {useState} from 'react'
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
 import {Swiper, SwiperSlide} from 'swiper'
-import {CartContext} from './utils/hooks/cartContext'
+import CartContext from './utils/hooks/cartContext'
 import ShoppingCartPage from './components/ShoppingCartPage'
 import Checkout from './components/Checkout'
 

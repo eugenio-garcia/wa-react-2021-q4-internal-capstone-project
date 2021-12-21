@@ -1,14 +1,13 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
-import styled, {ThemeProvider} from 'styled-components'
-import {useProductSearch} from '../utils/hooks/useProductSearch'
-import Header from '../Header.js'
-import Footer from '../Footer.js'
+import styled from 'styled-components'
+import Header from '../Header'
+import Footer from '../Footer'
 import './Products.css'
 import Button from './Button'
-import {CartContext} from '../utils/hooks/cartContext'
+import CartContext from '../utils/hooks/cartContext'
 
-function RemoveButton(props) {
+const RemoveButton = function(props) {
   const cartObject = useContext(CartContext)
   return (
     <button
@@ -21,17 +20,17 @@ function RemoveButton(props) {
   )
 }
 
-function InputQuantity(props) {
+const InputQuantity = function(props) {
   const cartObject = useContext(CartContext)
 
   const handleOnChange = event => {
     cartObject.editProductToCart(props.product.product, event.target.value)
   }
 
-  return <input value={props.initial} onChange={handleOnChange}></input>
+  return <input value={props.initial} onChange={handleOnChange} />
 }
 
-function ShoppingCartPage({showProducts, setShowProducts}) {
+const ShoppingCartPage = function({showProducts, setShowProducts}) {
   const cartObject = useContext(CartContext)
 
   // Define our `fg` and `bg` on the theme
@@ -58,7 +57,7 @@ function ShoppingCartPage({showProducts, setShowProducts}) {
     min-height: 600px;
   `
 
-  const TableProducts = ({products}) => {
+  const TableProducts = function({products}) {
     console.log(products)
     let total = 0
     for (let i = 0; i < products.length; i++) {
@@ -76,14 +75,13 @@ function ShoppingCartPage({showProducts, setShowProducts}) {
             <th>Subtotal</th>
             <th>Actions</th>
           </tr>
-          {products.map((product, index) => {
-            return (
+          {products.map((product, index) => (
               <tr>
                 <td>
                   <InputQuantity
                     initial={product.qty}
                     product={product}
-                  ></InputQuantity>
+                   />
                 </td>
                 <td>
                   <img
@@ -95,11 +93,10 @@ function ShoppingCartPage({showProducts, setShowProducts}) {
                 <td>{product.product.data.price}</td>
                 <td>{product.product.data.price * product.qty}</td>
                 <td>
-                  <RemoveButton product={product}></RemoveButton>
+                  <RemoveButton product={product} />
                 </td>
               </tr>
-            )
-          })}
+            ))}
         </table>
         <h3>Total:{total}</h3>
         <Link to="/checkout">Proceed to checkout</Link>
@@ -107,7 +104,7 @@ function ShoppingCartPage({showProducts, setShowProducts}) {
     )
   }
 
-  const MainLayer = ({products}) => {
+  const MainLayer = function({products}) {
     console.log(products)
 
     const bol = typeof products !== 'undefined' && products.length > 0
@@ -115,7 +112,7 @@ function ShoppingCartPage({showProducts, setShowProducts}) {
 
     return (
       <DivWrapper>
-        <DivSideBar></DivSideBar>
+        <DivSideBar />
         <DivMain>
           <h1>Shoppping Cart:</h1>
           <TableProducts products={products} />

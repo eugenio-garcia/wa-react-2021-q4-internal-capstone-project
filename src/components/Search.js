@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
 import styled, {ThemeProvider} from 'styled-components'
-import {useProductSearch} from '../utils/hooks/useProductSearch'
+import useProductSearch from '../utils/hooks/useProductSearch'
 import Header from '../Header.js'
 import Footer from '../Footer.js'
 import './Products.css'

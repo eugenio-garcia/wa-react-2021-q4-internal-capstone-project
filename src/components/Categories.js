@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {useProductCategories} from '../utils/hooks/useProductCategories'
+import useProductCategories from '../utils/hooks/useProductCategories'
 import {Link} from 'react-router-dom'
 
 const DivCategory = styled.div`

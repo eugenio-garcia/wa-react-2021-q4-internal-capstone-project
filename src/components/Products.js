@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import styled, {ThemeProvider} from 'styled-components'
 //import products from "../data/featured-products.json";
 //import productCategories from "../data/product-categories.json";
-import {useProductCategories} from '../utils/hooks/useProductCategories'
-import {useProducts} from '../utils/hooks/useProducts'
+import useProductCategories from '../utils/hooks/useProductCategories'
+import useProducts from '../utils/hooks/useProducts'
 import FeaturedProducts from './FeaturedProducts'
 import Header from '../Header.js'
 import Footer from '../Footer.js'

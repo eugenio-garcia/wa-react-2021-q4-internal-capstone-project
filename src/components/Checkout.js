@@ -6,7 +6,7 @@ import Header from '../Header.js'
 import Footer from '../Footer.js'
 import './Products.css'
 import Button from './Button'
-import {CartContext} from '../utils/hooks/cartContext'
+import CartContext from '../utils/hooks/cartContext'
 
 function Checkout({showProducts, setShowProducts}) {
   const cartObject = useContext(CartContext)

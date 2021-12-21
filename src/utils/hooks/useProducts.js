@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
-import {API_BASE_URL} from '../constants'
-import {useLatestAPI} from './useLatestAPI'
+import API_BASE_URL from '../constants'
+import useLatestAPI from './useLatestAPI'
 
-export function useProducts(size) {
+export default function useProducts(size) {
   const {ref: apiRef, isLoading: isApiMetadataLoading} = useLatestAPI()
   const [products, setProducts] = useState(() => ({
     data: {},
@@ -33,7 +33,6 @@ export function useProducts(size) {
         setProducts({data, isLoading: false})
       } catch (err) {
         setProducts({data: {}, isLoading: false})
-        console.error(err)
       }
     }
 
@@ -42,7 +41,7 @@ export function useProducts(size) {
     return () => {
       controller.abort()
     }
-  }, [apiRef, isApiMetadataLoading])
+  }, [apiRef, isApiMetadataLoading, size])
 
   return [products, setProducts]
 }
