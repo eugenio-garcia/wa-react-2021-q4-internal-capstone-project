@@ -23,7 +23,7 @@ function Home({showProducts, setShowProducts}) {
     useProducts(16)
 
   const Image = ({src}) => {
-    return <ImageInSlider className="slider" src={src} />
+    return <ImageInSlider alt="slider" className="slider" src={src} />
   }
 
   // const images = banners.results.map((obj) => {
@@ -31,7 +31,7 @@ function Home({showProducts, setShowProducts}) {
   // });
 
   const Slider = ({items}) => {
-    if (items == null || items.results == null) return <h2>Loading...</h2>
+    if (items == null || items.results == null) return <h2>LoadingSlider...</h2>
 
     let images = items.results.map(obj => {
       return obj.data.main_image.url
