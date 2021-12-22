@@ -1,46 +1,72 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import banners from "../data/featured-banners.json";
-import products from "../data/featured-products.json";
-import FeaturedProducts from "./FeaturedProducts";
-import Categories from "./Categories";
+import React, {useState} from 'react'
+import styled from 'styled-components'
+//import banners from "../data/featured-banners.json";
+//import products from "../data/featured-products.json";
+import FeaturedProducts from './FeaturedProducts'
+import Categories from './Categories'
+import Header from '../Header.js'
+import Footer from '../Footer.js'
+import Button from './Button'
+import useFeaturedBanners from '../utils/hooks/useFeaturedBanners'
+import useProducts from '../utils/hooks/useProducts'
 
 const ImageInSlider = styled.img`
   max-height: 100vh;
   width: 100vh;
-`;
+`
 
-function Home() {
-  const [index, setIndex] = React.useState(0);
+function Home({showProducts, setShowProducts}) {
+  const [index, setIndex] = React.useState(0)
 
-  const Image = ({ src }) => {
-    return <ImageInSlider className="slider" src={src} />;
-  };
+  const {data: banners = {}, isLoading, error} = useFeaturedBanners()
+  const [{data: products = {}, isLoadingProducts, errorProducts}, setProducts] =
+    useProducts(16)
 
-  const images = banners.results.map((obj) => {
-    return obj.data.main_image.url;
-  });
+  const Image = ({src}) => {
+    return <ImageInSlider alt="slider" className="slider" src={src} />
+  }
 
-  const Slider = ({ images }) => {
-    const absIndex = Math.abs(index);
-    const i = absIndex % images.length;
+  // const images = banners.results.map((obj) => {
+  //   return obj.data.main_image.url;
+  // });
 
-    return <Image src={images[i]} />;
-  };
+  const Slider = ({items}) => {
+    if (items == null || items.results == null) return <h2>LoadingSlider...</h2>
+
+    let images = items.results.map(obj => {
+      return obj.data.main_image.url
+    })
+    const absIndex = Math.abs(index)
+    const i = absIndex % images.length
+
+    return <Image src={images[i]} />
+  }
 
   return (
-    <div className="wrapper">
-      <div className="slider">
-        <button onClick={() => setIndex(index - 1)}>{"<"}</button>
-        <Slider images={images}>{/* <Images /> */}</Slider>
+    <div className="App">
+      <Header showProducts={showProducts} setShowProducts={setShowProducts} />
+      <Button setShowProducts={setShowProducts} showProducts={showProducts} />
+      <h1>Home Page2</h1>
+      <div className="wrapper">
+        <div className="slider">
+          <button onClick={() => setIndex(index - 1)}>{'<'}</button>
+          {isLoading && <h2>Loading...</h2>}
+          {error ? <h2>An error ocurred</h2> : <Slider items={banners} />}
 
-        <button onClick={() => setIndex(index + 1)}>{">"}</button>
+          <button onClick={() => setIndex(index + 1)}>{'>'}</button>
+        </div>
+
+        <Categories />
+        {isLoadingProducts && <h2>LoadingProducts...</h2>}
+        {errorProducts ? (
+          <h2>An error ocurred</h2>
+        ) : (
+          <FeaturedProducts featuredProducts={products.results} />
+        )}
       </div>
-
-      <Categories />
-      <FeaturedProducts featuredProducts={products.results}/>
+      <Footer />
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
